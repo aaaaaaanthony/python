@@ -1,15 +1,10 @@
-import time
-
 from bs4 import BeautifulSoup
-from selenium.webdriver.chrome import webdriver
 from selenium.webdriver.common.by import By
 
+from selenium_example.tool import get_browser
+
+browser = get_browser()
 url = "https://www.pearvideo.com/video_1771522"
-
-
-# 点击播放
-browser = webdriver.Chrome(executable_path="/Users/anthony/Desktop/chromedriver")
-browser.get(url)
 element = browser.find_element(by=By.XPATH, value='//*[@id="poster"]/i')
 element.click()
 

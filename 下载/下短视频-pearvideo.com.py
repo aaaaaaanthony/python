@@ -1,13 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
-from selenium.webdriver.chrome import webdriver
 from selenium.webdriver.common.by import By
 
+from selenium_example.tool import get_browser
 from 下载 import mp4下载工具
 
-browser = webdriver.Chrome(executable_path="/Users/anthony/Desktop/chromedriver")
-
 count = 1
+
+browser = get_browser()
 
 
 def craw():
@@ -24,8 +24,7 @@ def parse():
     """分析排行榜"""
     soup = BeautifulSoup(open("../电影.html"), features="lxml")
 
-    list = soup.find_all("a", class_="actplay")
-    for one in list:
+    for one in soup.find_all("a", class_="actplay"):
         url = one.get("href")
         get_video_url(url)
 
@@ -33,11 +32,7 @@ def parse():
 def get_video_url(url):
     """找到动态的视频地址"""
     url = "https://www.pearvideo.com/" + url
-    # response = requests.get("https://www.pearvideo.com/" + url)
-    # soup = BeautifulSoup(response.content, features="lxml")
-    # video = soup.find("video")
-    # video_url = video.get("src")
-    # print(video_url)
+
     # 点击播放
     browser.get(url)
     element = browser.find_element(by=By.XPATH, value='//*[@id="poster"]/i')
@@ -55,4 +50,3 @@ def get_video_url(url):
 
 
 parse()
-# down()
